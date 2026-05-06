@@ -1,6 +1,6 @@
 # hermes_webui_silverbullet_llm_wiki_docker
 
-This is a basic "single user" setup procedure for using [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [hermes-agent](https://hermes-agent.nousresearch.com/), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
+This is a basic "single user" setup procedure for using [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [ermes](https://get-hermes.ai/), [hermes-agent](https://hermes-agent.nousresearch.com/), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
 
 This containerized approach is significantly "locked down" compared to running hermes-agent directly on your machine, especially if you do not enable any messaging or other "cloud" services for your agent. Only one local folder on your machine is accessible by the agent, `workspace` which includes the subfolder for wiki content (`workspace/space`) and the inbox for the agent (`workspace/raw`), which is read-only for the agent. All other storage for the containers are restricted to docker volumes.
 
