@@ -94,4 +94,5 @@ This is not persistent unless you add it to `~/.bashrc`, `~/.bash_profile`, or ~
 
 ## Issues
 
-The agent's cron jobs may not work properly due to the default server profile used for model access.
+The agent's cron jobs may not work properly due to the default server profile used for model access. 
+This matters if you want the agent to setup a scheduled task to check the `/workspace/raw` folder periodically.
