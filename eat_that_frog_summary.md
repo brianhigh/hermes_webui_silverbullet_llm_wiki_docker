@@ -1,7 +1,9 @@
 # Summary: Eat That Frog!
 
 ## Overview
-Brian Tracy's ["Eat That Frog!"](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/) is a productivity philosophy based on the idea that the most important and often most daunting task (your "frog") should be tackled first thing in the morning. By prioritizing high-value activities and eliminating distractions, you can maximize your results and achieve your goals faster.
+Brian Tracy's ["Eat That Frog!"](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/) is a productivity philosophy and time 
+management technique based on the idea that the most important and often most daunting task (your "frog") should be tackled first thing in the 
+morning. By prioritizing high-value activities and eliminating distractions, you can maximize your results and achieve your goals faster.
 
 ## Key Themes
 
@@ -57,4 +59,5 @@ A form of zero-based thinking to clear your decks:
 * **Inside-Out/Outside-In:** Either start with the core (most important) part of a task or start with small peripheral tasks to build rhythm.
 
 ## Conclusion
-The ultimate question for productivity is: **"What is the most valuable use of my time right now?"** By constantly asking this and focusing on your "A1" task, you can transform your productivity and achieve extraordinary results.
+The ultimate question for productivity is: **"What is the most valuable use of my time right now?"** By constantly asking this and focusing on 
+your "A1" task, you can transform your productivity and achieve extraordinary results.
