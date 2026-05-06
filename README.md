@@ -8,17 +8,11 @@ The docker compose YAML file is a modification of [docker-compose.three-containe
 
 ## Setup hermes agent, hermes webui, and silverbullet wiki
 
-Run this in your Bash (or GitBash) Terminal:
+Once you have Dock Desktop installed and running, run these commands in your Bash (or GitBash) Terminal:
 
 ```bash
 mkdir -p ~/workspace/{raw,space}
-mkdir ~/hermes-webui
-```
-
-Copy `docker-compose.four-container.yml` to `~/hermes-webui/`.
-
-```bash
-cd ~/hermes-webui/
+git clone https://github.com/brianhigh/hermes_webui_silverbullet_llm_wiki_docker.git
 docker compose -f ./docker-compose.four-container.yml up -d
 ```
 
@@ -26,7 +20,7 @@ docker compose -f ./docker-compose.four-container.yml up -d
 
 Go to http://127.0.0.1:9119/config and press the `<> YAML` button.
 
-Paste this under "Model Configuration" in place of what's already there:
+To use locally-hosted Ollama as your model provider, paste this under "Model Configuration" in place of what's already there:
 
 ```
 model:
@@ -36,7 +30,7 @@ model:
   provider: auto
 ```
 
-Edit for your own situation. For reference, see: 
+Edit for your own situation (like a different model). For reference, see: 
 https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models
 
 Press the `SAVE` button.
@@ -45,14 +39,14 @@ Press the `SAVE` button.
 
 Go here: http://localhost:8787/
 
-Enter this into the `CHAT`:
+Enter this into the `CHAT`, or select it from the prompt choices listed:
 
 ```
 What files are in this workspace?
 ```
 
-If that looks right, then you can start using it as intended. For example, 
-paste in the contents of initial_prompt.txt and edit to match your situation
+If teh results looks right, then you can start using it as intended. For example, 
+paste in the contents of `initial_prompt.md` and edit to match your situation
 before pressing the `(↑)` button on the right side of the chat input box.
 
 ### Ollama model idle timeout (optional)
