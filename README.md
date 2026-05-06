@@ -1,7 +1,7 @@
 # hermes_webui_silverbullet_llm_wiki_docker
 
 This is a basic "single user" setup procedure for using [Docker Desktop](https://www.docker.com/products/docker-desktop/) 
-to locally host [hermes](https://get-hermes.ai/), [hermes-agent](https://hermes-agent.nousresearch.com/), 
+to locally host [hermes](https://get-hermes.ai/), [hermes-agent web dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), 
 [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a 
 Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local 
 Ollama-hosted LLM.
@@ -27,7 +27,7 @@ from another system on your network you would want to modify this setup to use a
 before opening up access to your network. You would also want to password-protect them. Currently, with this
 setup, only SilverBullet requires password authentication. So, as provided, this is just for local use by a
 single user on a single-user system like your personal workstation or laptop, not a shared server. Make sure 
-your system is firewalled to block inbound connections to TCP ports: 3000 (silverbullet), 9119 (hermes-agent), 
+your system is firewalled to block inbound connections to TCP ports: 3000 (silverbullet), 9119 (hermes-agent web dashboard), 
 8787 (hermes-webui), and 11434 (ollama).
 
 ## Setup hermes agent, hermes webui, and silverbullet wiki
@@ -55,7 +55,7 @@ Go to http://127.0.0.1:3000/, login, and make sure it's working okay. For exampl
 
 ### Configure Local Models (Ollama)
 
-Go to http://127.0.0.1:9119/config and press the `<> YAML` button.
+Go to the hermes-agent web dashboard at http://127.0.0.1:9119/config and press the `<> YAML` button.
 
 To use locally-hosted Ollama as your model provider, paste this under "Model Configuration" 
 in place of what's already there:
