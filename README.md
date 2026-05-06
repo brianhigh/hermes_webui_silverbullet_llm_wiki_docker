@@ -14,6 +14,11 @@ Once you have Dock Desktop installed and running, run these commands in your Bas
 mkdir -p ~/workspace/{raw,space}
 git clone https://github.com/brianhigh/hermes_webui_silverbullet_llm_wiki_docker.git
 cd hermes_webui_silverbullet_llm_wiki_docker
+```
+
+Edit `docker-compose.four-container.yml` to replace the SilverBullet admin password. Then run:
+
+```bash
 docker compose -f ./docker-compose.four-container.yml up -d
 ```
 
