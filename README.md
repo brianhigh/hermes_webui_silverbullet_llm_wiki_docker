@@ -6,14 +6,29 @@ to locally host [hermes](https://get-hermes.ai/), [hermes-agent](https://hermes-
 Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local 
 Ollama-hosted LLM.
 
+The docker compose YAML file is a modification of [docker-compose.three-container.yml](https://github.com/nesquena/hermes-webui/blob/master/docker-compose.three-container.yml) 
+from [hermes-webui](https://github.com/nesquena/hermes-webui).
+
+## Security
+
+### Containers
+
 This containerized approach is significantly "locked down" compared to just running hermes-agent directly on your machine, 
 especially if you do not enable any messaging or other "cloud" services for your agent. Only one local folder on your 
 machine is accessible by the agent, `workspace` which includes the subfolder for wiki content (`workspace/space`) and 
 the inbox for the agent (`workspace/raw`), which is read-only for the agent. All other storage for the containers are 
-restricted to docker volumes.
+restricted to docker volumes. By default, hermes will prompt for your approval when removing files, but not when creating 
+them.
 
-The docker compose YAML file is a modification of [docker-compose.three-container.yml](https://github.com/nesquena/hermes-webui/blob/master/docker-compose.three-container.yml) 
-from [hermes-webui](https://github.com/nesquena/hermes-webui).
+### Encryption, password-protection, and firewalls
+
+None of these web apps are configured for SSL encryption or network (LAN) access. If you want to access them 
+from another system on your network you would want to modify this setup to use a web proxy for SSL (https) 
+before opening up access to your network. You would also want to password-protect them. Currently, with this
+setup, only SilverBullet requires password authentication. So, as provided, this is just for local use by a
+single user on a single-user system like your personal workstation or laptop, not a shared server. Make sure 
+your system is firewalled to block inbound connections to TCP ports: 3000 (silverbullet), 9119 (hermes-agent), 
+8787 (hermes-webui), and 11434 (ollama).
 
 ## Setup hermes agent, hermes webui, and silverbullet wiki
 
