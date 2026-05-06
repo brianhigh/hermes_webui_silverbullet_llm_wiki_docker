@@ -168,7 +168,8 @@ services:
       - hermes-home:/hermes_data
       - ${SB_FOLDER:-~/workspace/space}:/space
     environment:
-      - SB_USER=admin:password   # Change this!
+      # Change this password!
+      - SB_USER=admin:password
       - PUID=${UID:-1000}
       - PGID=${GID:-1000}
     ports:
