@@ -13,7 +13,7 @@ from [hermes-webui](https://github.com/nesquena/hermes-webui).
 
 ### Hermes as an agent "harness"
 
-Hermes is the same category of agent harnesses as Claude Code, OpenAI Codex, OpenCode, and OpenClaw. See: 
+Hermes is an agent "harness" similar to others like Claude Code, OpenAI Codex, OpenCode, OpenClaw, etc. See: 
 [HERMES.md](https://github.com/nesquena/hermes-webui/blob/master/HERMES.md) for comparisons. Hermes is notable 
 for its ability to learn over time. Including a "knowlege base" wiki for organized persistent memory improves on that. 
 
