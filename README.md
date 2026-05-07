@@ -45,7 +45,7 @@ By mounting this file as a **bind mount** into the `hermes-agent` container, we 
 - The agent's connection to your local LLM is always accurate and easily adjustable.
 
 **To update your model or API key:**
-Edit `config/hermes.env` on your host machine and restart the containers. You may also need to update the `config.yaml` in the Hermes Dashboard. See "Configure Model (Ollama) in the Dashboard" below for details.
+Edit `config/hermes.env` on your host machine and restart the containers. You may also need to update the `config.yaml` in the Hermes Dashboard. See "Configure Model (Ollama) in the Dashboard" and "Test hermes-webui" below for details, as the model name is set in two other places.
 
 ### 2. Quick Start
 Clone this repository and enter the `hermlet` folder:

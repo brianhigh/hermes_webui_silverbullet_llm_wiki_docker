@@ -130,7 +130,7 @@ services:
       - ${HERMES_WORKSPACE:-~/workspace}/raw:/workspace/raw:ro
       # Bind-mount the configuration file from the host for easy, persistent, 
       # and version-controlled configuration management.
-      - ./config/hermes.env:/home/hermeswebui/.hermes/.env:ro
+      - ./config/hermes.env:/home/hermeswebui/.hermes/.env
     environment:
       - HERMES_WEBUI_HOST=0.0.0.0
       - HERMES_WEBUI_PORT=8787
