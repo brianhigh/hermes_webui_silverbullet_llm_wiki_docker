@@ -11,6 +11,11 @@ from [hermes-webui](https://github.com/nesquena/hermes-webui).
 
 ## Security
 
+### Hermes as an agent "harness"
+
+Hermes is the same category of agent harnesses as Claude Code, OpenAI Codex, OpenCode, and OpenClaw. See: 
+[HERMES.md](https://github.com/nesquena/hermes-webui/blob/master/HERMES.md) for comparisons.
+
 ### Containers
 
 This containerized approach is significantly "locked down" compared to just running hermes-agent directly on your machine, 
