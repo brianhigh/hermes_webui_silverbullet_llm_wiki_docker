@@ -87,7 +87,7 @@ For details, see "Test the Ingestion Workflow" later in this README, as it invol
 
 ## Methodology: "Eat That Frog!"
 
-This system is designed to implement Brian Tracy's "Eat That Frog!" productivity philosophy. By automating the mundane task of information organization, the agent allows you to focus on your most important, high-impact "A1" tasks.
+This system is designed to implement Brian Tracy's [Eat That Frog!](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/) productivity philosophy. By automating the mundane task of information organization, the agent allows you to focus on your most important, high-impact "A1" tasks.
 
 To guide your Hermes agent to follow this approach, use the example `initial_prompt.md` as a starting point. It refers to `eat_that_frog_summary.md` which you can place in `/workspace/space` before use.
 
