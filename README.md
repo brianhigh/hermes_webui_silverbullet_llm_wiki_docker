@@ -101,6 +101,17 @@ If the results looks right, then you can start using it as intended. For example
 paste in the contents of `initial_prompt.md` and edit to match your situation
 before pressing the `(↑)` button on the right side of the chat input box.
 
+If you choose to use the `initial_prompt.md`, your Hermes agent may automate an ingestion 
+workflow. Mine did and documented it for me like this:
+
+> #### Automated Wiki Ingestion
+> This setup includes an automated pipeline to grow your wiki.
+> 1. **The Inbox:** Drop any `.md`, `.txt`, or `.html` files into `/workspace/raw`.
+> 2. **The Processor:** A Python script (`/workspace/scripts/wiki_integrator.py`) runs via a scheduled `cronjob` every minute.
+> 3. **The Convention:** The script automatically renames files to `snake_case.md` and integrates them into the SilverBullet `/workspace/space` folder.
+> 4. **The Manifest:** A `processed_manifest.txt` in `/workspace` tracks which files have been integrated to prevent duplicates.
+
+
 ### Ollama model idle timeout (optional)
 
 If you are running Ollama on Windows, you can increase the model idle timeout:
@@ -136,3 +147,8 @@ OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
 ```
 
 If not, ask your hermes agent to fix it. Or you can fix it yourself with, e.g., a `sudo sed -i [...]` command.
+
+```bash
+sudo sed -p -e 's/ollamayour_ollama_key_here/ollama/g' /home/hermeswebui/.hermes/.env
+sudo sed -i 's/# OLLAMA_BASE_URL=https:\/\/ollama\.com\/v1/OLLAMA_BASE_URL=http:\/\/host.docker.internal:11434\/v1/' /home/hermeswebui/.hermes/.env
+```
