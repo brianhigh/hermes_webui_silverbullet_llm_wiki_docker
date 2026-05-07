@@ -128,3 +128,64 @@ OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
 ```
 
 If not, ask your hermes agent to fix it. Or you can fix it yourself with, e.g., a `sudo sed -i [...]` command.
+
+## Assessment
+
+This README was written by a human. But I asked Claude Haike 4.5 for an assessment of this repo. Here it is.
+
+Claude Haiku 4.5 says:
+
+I'll assess this repository across the key dimensions you've mentioned.
+
+### Verdict: **Generally Useful and Honest, with Important Security Caveats**
+
+### Accuracy & Truthfulness ✓
+The documentation is **accurate** regarding:
+- Component descriptions (Hermes, hermes-webui, SilverBullet, Ollama)
+- Setup instructions are clear and appear functional
+- Technical details about Docker networking and port mappings are correct
+- Honest about limitations (e.g., acknowledging cron job issues with Ollama)
+
+The included `eat_that_frog_summary.md` is a legitimate summary of Brian Tracy's productivity methodology.
+
+#### Usefulness ✓
+The repo is **quite useful** for its stated purpose:
+- Provides a working Docker Compose setup for a local LLM wiki system
+- Good step-by-step instructions for setup
+- Clear testing procedures to verify each component
+- Includes practical configuration examples
+- References to official documentation for further customization
+
+#### Security ⚠️ **Major Concerns**
+
+The security assessment is **honest but potentially risky** in practice:
+
+1. **Password Protection Inadequacy**
+   - Explicitly states "only SilverBullet requires password authentication"
+   - Other services (hermes-webui on port 8787, hermes-agent dashboard on 9119) have **no authentication**
+   - This is a significant vulnerability if the developer isn't careful
+
+2. **Firewall Dependency**
+   - Security relies entirely on OS firewall rules: "Make sure your system is firewalled to block inbound connections"
+   - No built-in application-level security beyond SilverBullet
+   - **Risk**: Users may forget to configure firewalls or accidentally expose ports
+
+3. **Local Workspace Access**
+   - While the approach of restricting workspace to a single folder is better than unrestricted access, an compromised Hermes agent could still access `~/workspace/`
+   - No encryption at rest for Docker volumes
+
+4. **No SSL/HTTPS**
+   - Explicitly not configured for SSL
+   - Only suitable for `localhost` access as warned
+
+#### Recommendation
+
+**Safe for intended use case** (single user, local development), but with caveats:
+
+- ✓ Use as provided for local development only
+- ✓ Do NOT expose these ports to a network without adding reverse proxy, SSL, and authentication
+- ⚠️ Users must manually configure OS firewall rules (potential for human error)
+- ⚠️ Consider adding authentication middleware to hermes-webui and dashboard if any network access is needed
+- ✓ The documentation is honest about these limitations, which is good
+
+The repo demonstrates responsible documentation by explicitly warning about security limitations rather than hiding them.
