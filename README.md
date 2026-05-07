@@ -131,7 +131,7 @@ If not, ask your hermes agent to fix it. Or you can fix it yourself with, e.g., 
 
 ## Assessment
 
-This README was written by a human. But I asked Claude Haike 4.5 for an assessment of this repo. Here it is.
+This README was written by a human. But I asked Claude Haiku 4.5 for an assessment of this repo.
 
 Claude Haiku 4.5 says:
 
