@@ -28,13 +28,18 @@ them.
 
 ### Encryption, password-protection, and firewalls
 
-None of these web apps are configured for SSL encryption or network (LAN) access. If you want to access them 
-from another system on your network you would want to modify this setup to use a web proxy for SSL (https) 
+None of these web apps are configured for SSL encryption or inbound network (LAN) access. If you want to access 
+them from another system on your network you would want to modify this setup to use a web proxy for SSL (https) 
 before opening up access to your network. You would also want to password-protect them. Currently, with this
 setup, only SilverBullet requires password authentication. So, as provided, this is just for local use by a
-single user on a single-user system like your personal workstation or laptop, not a shared server. Make sure 
-your system is firewalled to block inbound connections to TCP ports: 3000 (silverbullet), 9119 (hermes-agent web dashboard), 
-8787 (hermes-webui), and 11434 (ollama).
+single user on a single-user system like your personal workstation or laptop, not a shared server.
+
+The Docker compose file limits access to the various services to "localhost" (127.0.0.1) to prevent inbound access from 
+the network. Make sure you are running a firewall, though, as a best practice and to add another layer of protection.
+Most operating systems include a firewall that blocks these ports by default, so make sure to enable your firewall and 
+you should be good. But to be extra careful, you can check your firewall configuration to be sure that these TCP ports 
+do not allow inbound traffic: TCP ports: 8647 (silverbullet), 9119 (hermes-agent web dashboard), 8787 (hermes-webui), 
+8642 (hermes-agent), and 11434 (ollama).
 
 ## Setup hermes agent, hermes webui, and silverbullet wiki
 
@@ -56,7 +61,7 @@ docker compose -f ./docker-compose.four-container.yml up -d
 
 ### Test the wiki
 
-Go to http://127.0.0.1:3000/, login, and make sure it's working okay. For example, you could create an 
+Go to http://127.0.0.1:8647/, login, and make sure it's working okay. For example, you could create an 
 `eat_that_frog_summary.md` page. The example `initial_prompt.md` provided here references that wiki page.
 
 ### Configure Local Models (Ollama)
@@ -128,64 +133,3 @@ OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
 ```
 
 If not, ask your hermes agent to fix it. Or you can fix it yourself with, e.g., a `sudo sed -i [...]` command.
-
-## Assessment
-
-This README was written by a human. But I asked Claude Haiku 4.5 for an assessment of this repo.
-
-Claude Haiku 4.5 says:
-
-I'll assess this repository across the key dimensions you've mentioned.
-
-### Verdict: **Generally Useful and Honest, with Important Security Caveats**
-
-### Accuracy & Truthfulness ✓
-The documentation is **accurate** regarding:
-- Component descriptions (Hermes, hermes-webui, SilverBullet, Ollama)
-- Setup instructions are clear and appear functional
-- Technical details about Docker networking and port mappings are correct
-- Honest about limitations (e.g., acknowledging cron job issues with Ollama)
-
-The included `eat_that_frog_summary.md` is a legitimate summary of Brian Tracy's productivity methodology.
-
-#### Usefulness ✓
-The repo is **quite useful** for its stated purpose:
-- Provides a working Docker Compose setup for a local LLM wiki system
-- Good step-by-step instructions for setup
-- Clear testing procedures to verify each component
-- Includes practical configuration examples
-- References to official documentation for further customization
-
-#### Security ⚠️ **Major Concerns**
-
-The security assessment is **honest but potentially risky** in practice:
-
-1. **Password Protection Inadequacy**
-   - Explicitly states "only SilverBullet requires password authentication"
-   - Other services (hermes-webui on port 8787, hermes-agent dashboard on 9119) have **no authentication**
-   - This is a significant vulnerability if the developer isn't careful
-
-2. **Firewall Dependency**
-   - Security relies entirely on OS firewall rules: "Make sure your system is firewalled to block inbound connections"
-   - No built-in application-level security beyond SilverBullet
-   - **Risk**: Users may forget to configure firewalls or accidentally expose ports
-
-3. **Local Workspace Access**
-   - While the approach of restricting workspace to a single folder is better than unrestricted access, an compromised Hermes agent could still access `~/workspace/`
-   - No encryption at rest for Docker volumes
-
-4. **No SSL/HTTPS**
-   - Explicitly not configured for SSL
-   - Only suitable for `localhost` access as warned
-
-#### Recommendation
-
-**Safe for intended use case** (single user, local development), but with caveats:
-
-- ✓ Use as provided for local development only
-- ✓ Do NOT expose these ports to a network without adding reverse proxy, SSL, and authentication
-- ⚠️ Users must manually configure OS firewall rules (potential for human error)
-- ⚠️ Consider adding authentication middleware to hermes-webui and dashboard if any network access is needed
-- ✓ The documentation is honest about these limitations, which is good
-
-The repo demonstrates responsible documentation by explicitly warning about security limitations rather than hiding them.
