@@ -116,3 +116,14 @@ This is not persistent unless you add it to `~/.bashrc`, `~/.bash_profile`, or ~
 
 The agent's cron jobs may not work properly due to the default server profile used for model access. 
 This matters if you want the agent to setup a scheduled task to check the `/workspace/raw` folder periodically.
+
+If you encounter an error with hermes cron jobs when using Ollama, you can check the webui's config.yaml from 
+the Docker terminal for the hermes-webui container. If it looks like this, cron jobs should work:
+
+```
+$ sudo grep -i ollama_ /home/hermeswebui/.hermes/.env
+OLLAMA_API_KEY=ollama
+OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
+```
+
+If not, ask your hermes agent to fix it. Or you can fix it yourself with, e.g., a `sudo sed -i [...]` command.
