@@ -14,7 +14,8 @@ from [hermes-webui](https://github.com/nesquena/hermes-webui).
 ### Hermes as an agent "harness"
 
 Hermes is the same category of agent harnesses as Claude Code, OpenAI Codex, OpenCode, and OpenClaw. See: 
-[HERMES.md](https://github.com/nesquena/hermes-webui/blob/master/HERMES.md) for comparisons.
+[HERMES.md](https://github.com/nesquena/hermes-webui/blob/master/HERMES.md) for comparisons. Hermes is notable 
+for its ability to learn over time. Including a "knowlege base" wiki for organized persistent memory improves on that. 
 
 ### Containers
 
@@ -37,7 +38,7 @@ your system is firewalled to block inbound connections to TCP ports: 3000 (silve
 
 ## Setup hermes agent, hermes webui, and silverbullet wiki
 
-Once you have Dock Desktop installed and running, run these commands in your Bash (or GitBash) Terminal:
+Once you have Docker Desktop installed and running, run these commands in your Bash (or GitBash) Terminal:
 
 ```bash
 mkdir -p ~/workspace/{raw,space}
@@ -107,7 +108,7 @@ You will need to completely shut down Ollama and restart it for this to take eff
 Or for Mac/Linux:
 
 ```bash
-export OLLAMA_KEEP_ALIVE=30m
+export OLLAMA_KEEP_ALIVE=10m
 ```
 
 This is not persistent unless you add it to `~/.bashrc`, `~/.bash_profile`, or ~/.zshrc`.
