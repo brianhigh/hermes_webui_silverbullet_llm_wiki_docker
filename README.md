@@ -1,6 +1,6 @@
 # hermlet
 
-![hermlet mascot](images/hermlet_mascot.png)
+![hermlet mascot](images/hermlet_mascot_small.png)
 
 ## Purpose
 
