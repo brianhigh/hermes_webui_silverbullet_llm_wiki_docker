@@ -1,75 +1,120 @@
 # hermlet
 
-This is a basic "single user" setup procedure for using [Docker Desktop](https://www.docker.com/products/docker-desktop/) 
-to locally host [hermes](https://get-hermes.ai/), [hermes-agent web dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), 
-[hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a 
-Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local 
-Ollama-hosted LLM.
+## Purpose
+
+This repository contains the orchestration configuration for a "Living LLM Wiki" deployment.
+
+The intended use is for a "single user" system running [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [hermes](https://get-hermes.ai/), [hermes-agent web dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
+
+The example `initial_prompt.md` may be used to guide the agent to create a specific workflow based on a specific productivity philosophy. You are encouraged to customize this for your own needs.
 
 The docker compose YAML file is a modification of [docker-compose.three-container.yml](https://github.com/nesquena/hermes-webui/blob/master/docker-compose.three-container.yml) 
 from [hermes-webui](https://github.com/nesquena/hermes-webui).
 
-## Security
+## Architecture Overview
 
-### Hermes as an agent "harness"
+The system is composed of four interacting services, all containerized via Docker Compose for isolation and portability:
 
-Hermes is an agent "harness" similar to others like Claude Code, OpenAI Codex, OpenCode, OpenClaw, etc. See: 
-[HERMES.md](https://github.com/nesquena/hermes-webui/blob/master/HERMES.md) for comparisons. Hermes is notable 
-for its ability to learn over time. Including a "knowlege base" wiki for organized persistent memory improves on that. 
+1.  **hermes-agent**: The intelligent "brain." An agentic gateway that processes tasks, manages tools, and executes the automated integration workflow.
+2.  **hermes-dashboard**: A monitoring interface for real-time agent activity, session tracking, and resource usage.
+3.  **hermes-webui**: The primary human-AI interface for chat and task delegation.
+4.  **silverbullet**: A highly extensible, Markdown-based personal knowledge management (PKM) system.
 
-### Containers
+All services share a persistent, version-controlled configuration and a common "workspace" for both long-term memory (the Wiki) and the incoming data stream (the Inbox).
 
-This containerized approach is significantly "locked down" compared to just running hermes-agent directly on your machine, 
-especially if you do not enable any messaging or other "cloud" services for your agent. Only one local folder on your 
-machine is accessible by the agent, `workspace` which includes the subfolder for wiki content (`workspace/space`) and 
-the inbox for the agent (`workspace/raw`), which is read-only for the agent. All other storage for the containers are 
-restricted to docker volumes. By default, hermes will prompt for your approval when removing files, but not when creating 
-them.
+---
 
-### Encryption, password-protection, and firewalls
+## Core Workflow: The "Living Wiki" Inbox
 
-None of these web apps are configured for SSL encryption or inbound network (LAN) access. If you want to access 
-them from another system on your network you would want to modify this setup to use a web proxy for SSL (https) 
-before opening up access to your network. You would also want to password-protect them. Currently, with this
-setup, only SilverBullet requires password authentication. So, as provided, this is just for local use by a
-single user on a single-user system like your personal workstation or laptop, not a shared server.
+The central innovation of this setup is the continuous, automated integration of information.
 
-The Docker compose file limits access to the various services to "localhost" (127.0.0.1) to prevent inbound access from 
-the network. Make sure you are running a firewall, though, as a best practice and to add another layer of protection.
-Most operating systems include a firewall that blocks these ports by default, so make sure to enable your firewall and 
-you should be good. But to be extra careful, you can check your firewall configuration to be sure that these TCP ports 
-do not allow inbound traffic: TCP ports: 3000 (silverbullet), 9119 (hermes-agent web dashboard), 8787 (hermes-webui), 
-8642 (hermes-agent), and 11434 (ollama).
+1.  **The Inbox (`/workspace/raw`)**: Users drop documents (MD, TXT, HTML, etc.) into the `raw` directory.
+2.  **The Integrator**: A background process (via `cron`) monitors this directory. It identifies new files, extracts their textual content, and transforms them into SilverBullet-compatible Markdown.
+3.  **The Wiki (`/workspace/space`)**: The processed content is moved into the SilverBullet space using a strict `snake_case.md` naming convention, ensuring a clean, searchable, and interlinked "wiki graph."
 
-## Setup hermes agent, hermes webui, and silverbullet wiki
+---
 
-Once you have Docker Desktop installed and running, run these commands in your Bash (or GitBash) Terminal:
+## Configuration & Deployment
+
+### 1. Configuration
+The entire system's behavior (including the connection to your local **Ollama** instance) is controlled via a single, version-controlled file: `config/hermes.env`.
+
+By mounting this file as a **read-only bind mount** into the `hermes-agent` container, we ensure that:
+- The configuration is persistent across container recreations.
+- The setup is "infrastructure as code" (IaC) compliant.
+- The agent's connection to your local LLM is always accurate and easily adjustable.
+
+**To update your model or API key:**
+Simply edit `config/hermes.env` on your host machine and restart the containers.
+
+### 2. Quick Start
+Clone this repository and enter the `hermlet` folder:
 
 ```bash
 mkdir -p ~/workspace/{raw,space}
 git clone https://github.com/brianhigh/hermlet.git
 cd hermlet
+cp eat_that_frog_summary.md ~/workspace/space/
 ```
 
-Edit `docker-compose.yml` to replace the SilverBullet admin password.
-
-Then run:
+Ensure Docker Desktop is running. From the `hermlet` directory, run:
 
 ```bash
 docker compose up -d
 ```
 
-### Test the wiki
+### 3. Deployment Requirements
+- **Docker Desktop** (Windows, Mac, or Linux)
+- **Ollama** running locally with the desired model (e.g., `gemma4:26b`)
+- **Network Access**: The services have been configured for local access only. However, as a precaution, ensure your OS firewall is enabled and blocks inbound network access to the following TCP ports (allowing localhost access only):
+  - `3000` (SilverBullet Wiki)
+  - `8787` (Hermes WebUI)
+  - `9119` (Hermes Dashboard)
+  - `8642` (Hermes Agent Gateway)
+  - `11434` (Ollama API)
 
-Go to http://127.0.0.1:3000/, login, and make sure it's working okay. For example, you could create an 
-`eat_that_frog_summary.md` page. The example `initial_prompt.md` provided here references that wiki page.
+---
 
-### Configure Local Models (Ollama)
+## Security & Isolation
 
-Go to the hermes-agent web dashboard at http://127.0.0.1:9119/config and press the `<> YAML` button.
+- **Filesystem Isolation**: The agent is restricted to the `/workspace` directory and the `config/.env` file. It cannot see or touch the rest of your host system.
+- **Read-Only Ingress**: The `/workspace/raw` directory is mounted as **read-only** to the `hermes-agent` container, preventing accidental or malicious modification of incoming data during the processing stage.
+- **Network Lockdown**: The `docker-compose.yml` is configured to bind all services to `127.0.0.1`, ensuring they are only accessible from your local machine and not exposed to the internet or your local network.
 
-To use locally-hosted Ollama as your model provider, paste this under "Model Configuration" 
-in place of what's already there:
+For details, see "Test the Ingestion Workflow" later in this README, as it involves some additional setup.
+
+---
+
+## Methodology: "Eat That Frog!"
+
+This system is designed to implement Brian Tracy's "Eat That Frog!" productivity philosophy. By automating the mundane task of information organization, the agent allows you to focus on your most important, high-impact "A1" tasks.
+
+To guide your Hermes agent to follow this approach, use the example `initial_prompt.md` as a starting point. It refers to `eat_that_frog_summary.md` which you can place in `/workspace/space` before use.
+
+## Web Applications 
+
+### Access
+
+The URLs to access the applications in this system will be shown in Docker Deskop under the Container -> Ports column with clickable links to open the various services in your web browser. For reference, these are:
+
+| Name             |          URL           | Use                             | 
+| ---------------- | ---------------------- | ------------------------------- |
+| hermes-agent     | http://127.0.0.1:8642  | URL not functional: **ignore**  |
+| silver-bullet-1  | http://127.0.0.1:3000  | SilverBullet Wiki               |
+| hermes-webui     | http://127.0.0.1:8787  | Hermes WebUI (chat, etc.)       |
+| hermes-dashboard | http://127.0.0.1:9119  | Hermes Dashboard (config, etc.) |
+
+### Setup and Testing
+
+#### Test the wiki
+
+Go to http://127.0.0.1:3000/, login, and make sure it's working okay. You should see an index page with various sections, with "Recently modified pages" the bottom. In that section, you should see a link to `eat_that_frog_summary`. The example `initial_prompt.md` references that wiki page.
+
+#### Configure Model (Ollama) in teh Dashboard
+
+Go to the hermes-agent web dashboard "config" page at http://127.0.0.1:9119/config and press the `<> YAML` button.
+
+To use locally-hosted Ollama as your model provider, paste this under "Model Configuration" in place of what's already there:
 
 ```
 model:
@@ -79,17 +124,15 @@ model:
   provider: auto
 ```
 
-Edit for your own situation (like a different model). For reference, see: 
-https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models
+Edit for your own situation (like a different model). For reference, see: https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models
 
 Press the `SAVE` button.
 
-### Testing hermes-webui
+#### Test hermes-webui
 
 Go here: http://localhost:8787/
 
-Select the model you configured in the web dash board from the model \[\#\] pick-list at the bottom 
-of the "Message Hermes..." chat box. It should have a "PRIMARY (AUTO)" label next to it. 
+Select the model you configured in the web dashboard from the model \[\#\] pick-list at the bottom of the "Message Hermes..." chat box. It should have a "PRIMARY (AUTO)" label next to it. 
 
 Then enter this (below) into the `CHAT`, or select it from the prompt choices listed:
 
@@ -97,12 +140,11 @@ Then enter this (below) into the `CHAT`, or select it from the prompt choices li
 What files are in this workspace?
 ```
 
-If the results looks right, then you can start using it as intended. For example, 
-paste in the contents of `initial_prompt.md` and edit to match your situation
-before pressing the `(↑)` button on the right side of the chat input box.
+If the results looks right, then you can start using it as intended. For example, paste in the contents of `initial_prompt.md` and edit to match your situation before pressing the `(↑)` button on the right side of the chat input box.
 
-If you choose to use the `initial_prompt.md`, your Hermes agent may automate an ingestion 
-workflow. Mine did and documented it for me like this:
+#### Test the Ingestion Workflow
+
+If you choose to use the `initial_prompt.md`, your Hermes agent may automate an ingestion workflow. Mine did and documented it for me like this:
 
 > #### Automated Wiki Ingestion
 > This setup includes an automated pipeline to grow your wiki.
@@ -111,8 +153,13 @@ workflow. Mine did and documented it for me like this:
 > 3. **The Convention:** The script automatically renames files to `snake_case.md` and integrates them into the SilverBullet `/workspace/space` folder.
 > 4. **The Manifest:** A `processed_manifest.txt` in `/workspace` tracks which files have been integrated to prevent duplicates.
 
+You will likely need to chat with your Hermes agent to get this workflow working properly, as it will need to create a new skill. If the workflow automation does not work correctly at first, chat and test until you are satisfied with the results.
 
 ### Ollama model idle timeout (optional)
+
+When you resume chatting after a few minutes of idle time, you may find it annoying delay before the model response. This occurs when Ollama removes your model from VRAM. The delay from reloading the model can be lengthy, especially with larger models.
+
+#### Windows
 
 If you are running Ollama on Windows, you can increase the model idle timeout:
 
@@ -120,35 +167,12 @@ If you are running Ollama on Windows, you can increase the model idle timeout:
 [System.Environment]::SetEnvironmentVariable("OLLAMA_KEEP_ALIVE", "10m", "User")
 ```
 
-This is a persistent setting.
+This is a persistent setting. However, you will need to completely shut down Ollama and restart it for the change to take effect.	
 
-You will need to completely shut down Ollama and restart it for this to take effect.	
-
-Or for Mac/Linux:
+#### Mac/Linux
 
 ```bash
 export OLLAMA_KEEP_ALIVE=10m
 ```
 
 This is not persistent unless you add it to `~/.bashrc`, `~/.bash_profile`, or ~/.zshrc`.
-
-## Issues
-
-The agent's cron jobs may not work properly due to the default server profile used for model access. 
-This matters if you want the agent to setup a scheduled task to check the `/workspace/raw` folder periodically.
-
-If you encounter an error with hermes cron jobs when using Ollama, you can check the webui's `.env` from 
-the Docker terminal for the hermes-webui container. If it looks like this, cron jobs should work:
-
-```
-$ sudo grep -i ollama_ /home/hermeswebui/.hermes/.env
-OLLAMA_API_KEY=ollama
-OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
-```
-
-If not, ask your hermes agent to fix it. Or you can fix it yourself with, e.g., a `sudo sed -i [...]` command.
-
-```bash
-sudo sed -p -e 's/ollamayour_ollama_key_here/ollama/g' /home/hermeswebui/.hermes/.env
-sudo sed -i 's/# OLLAMA_BASE_URL=https:\/\/ollama\.com\/v1/OLLAMA_BASE_URL=http:\/\/host.docker.internal:11434\/v1/' /home/hermeswebui/.hermes/.env
-```
