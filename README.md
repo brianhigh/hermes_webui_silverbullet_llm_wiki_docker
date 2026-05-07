@@ -39,13 +39,13 @@ The central innovation of this setup is the continuous, automated integration of
 ### 1. Configuration
 The entire system's behavior (including the connection to your local **Ollama** instance) is controlled via a single, version-controlled file: `config/hermes.env`.
 
-By mounting this file as a **read-only bind mount** into the `hermes-agent` container, we ensure that:
+By mounting this file as a **bind mount** into the `hermes-agent` container, we ensure that:
 - The configuration is persistent across container recreations.
 - The setup is "infrastructure as code" (IaC) compliant.
 - The agent's connection to your local LLM is always accurate and easily adjustable.
 
 **To update your model or API key:**
-Simply edit `config/hermes.env` on your host machine and restart the containers.
+Edit `config/hermes.env` on your host machine and restart the containers. You may also need to update the `config.yaml` in the Hermes Dashboard. See "Configure Model (Ollama) in the Dashboard" below for details.
 
 ### 2. Quick Start
 Clone this repository and enter the `hermlet` folder:
@@ -110,7 +110,7 @@ The URLs to access the applications in this system will be shown in Docker Desko
 
 Go to http://127.0.0.1:3000/, login, and make sure it's working okay. You should see an index page with various sections, with "Recently modified pages" the bottom. In that section, you should see a link to `eat_that_frog_summary`. The example `initial_prompt.md` references that wiki page.
 
-#### Configure Model (Ollama) in teh Dashboard
+#### Configure Model (Ollama) in the Dashboard
 
 Go to the hermes-agent web dashboard "config" page at http://127.0.0.1:9119/config and press the `<> YAML` button.
 
