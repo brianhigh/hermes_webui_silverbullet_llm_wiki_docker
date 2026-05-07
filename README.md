@@ -56,7 +56,7 @@ Edit `docker-compose.yml` to replace the SilverBullet admin password.
 Then run:
 
 ```bash
-docker compose -f ./docker-compose.yml up -d
+docker compose up -d
 ```
 
 ### Test the wiki
