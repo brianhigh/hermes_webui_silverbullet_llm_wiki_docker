@@ -1,4 +1,4 @@
-# hermes_webui_silverbullet_llm_wiki_docker
+# hermlet
 
 This is a basic "single user" setup procedure for using [Docker Desktop](https://www.docker.com/products/docker-desktop/) 
 to locally host [hermes](https://get-hermes.ai/), [hermes-agent web dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), 
@@ -38,7 +38,7 @@ The Docker compose file limits access to the various services to "localhost" (12
 the network. Make sure you are running a firewall, though, as a best practice and to add another layer of protection.
 Most operating systems include a firewall that blocks these ports by default, so make sure to enable your firewall and 
 you should be good. But to be extra careful, you can check your firewall configuration to be sure that these TCP ports 
-do not allow inbound traffic: TCP ports: 8647 (silverbullet), 9119 (hermes-agent web dashboard), 8787 (hermes-webui), 
+do not allow inbound traffic: TCP ports: 3000 (silverbullet), 9119 (hermes-agent web dashboard), 8787 (hermes-webui), 
 8642 (hermes-agent), and 11434 (ollama).
 
 ## Setup hermes agent, hermes webui, and silverbullet wiki
@@ -47,21 +47,21 @@ Once you have Docker Desktop installed and running, run these commands in your B
 
 ```bash
 mkdir -p ~/workspace/{raw,space}
-git clone https://github.com/brianhigh/hermes_webui_silverbullet_llm_wiki_docker.git
-cd hermes_webui_silverbullet_llm_wiki_docker
+git clone https://github.com/brianhigh/hermlet.git
+cd hermlet
 ```
 
-Edit `docker-compose.four-container.yml` to replace the SilverBullet admin password.
+Edit `docker-compose.yml` to replace the SilverBullet admin password.
 
 Then run:
 
 ```bash
-docker compose -f ./docker-compose.four-container.yml up -d
+docker compose -f ./docker-compose.yml up -d
 ```
 
 ### Test the wiki
 
-Go to http://127.0.0.1:8647/, login, and make sure it's working okay. For example, you could create an 
+Go to http://127.0.0.1:3000/, login, and make sure it's working okay. For example, you could create an 
 `eat_that_frog_summary.md` page. The example `initial_prompt.md` provided here references that wiki page.
 
 ### Configure Local Models (Ollama)
@@ -88,7 +88,10 @@ Press the `SAVE` button.
 
 Go here: http://localhost:8787/
 
-Enter this into the `CHAT`, or select it from the prompt choices listed:
+Select the model you configured in the web dash board from the model \[\#\] pick-list at the bottom 
+of the "Message Hermes..." chat box. It should have a "PRIMARY (AUTO)" label next to it. 
+
+Then enter this (below) into the `CHAT`, or select it from the prompt choices listed:
 
 ```
 What files are in this workspace?

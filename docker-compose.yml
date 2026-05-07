@@ -173,7 +173,7 @@ services:
       - PUID=${UID:-1000}
       - PGID=${GID:-1000}
     ports:
-      - "127.0.0.1:8647:8647"
+      - "127.0.0.1:3000:3000"
     networks:
       - hermes-net
 
