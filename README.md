@@ -1,5 +1,7 @@
 # hermlet
 
+![hermlet mascot](images/hermlet_mascot.png)
+
 ## Purpose
 
 This repository contains the orchestration configuration for a "Living LLM Wiki" deployment.
@@ -99,7 +101,7 @@ The URLs to access the applications in this system will be shown in Docker Desko
 
 | Name             |          URL           | Use                             | 
 | ---------------- | ---------------------- | ------------------------------- |
-| hermes-agent     | http://127.0.0.1:8642  | URL not functional: **ignore**  |
+| hermes-agent     | http://127.0.0.1:8642  | **ignore**                      |
 | silver-bullet-1  | http://127.0.0.1:3000  | SilverBullet Wiki               |
 | hermes-webui     | http://127.0.0.1:8787  | Hermes WebUI (chat, etc.)       |
 | hermes-dashboard | http://127.0.0.1:9119  | Hermes Dashboard (config, etc.) |
