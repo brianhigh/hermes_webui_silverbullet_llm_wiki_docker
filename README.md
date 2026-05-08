@@ -26,10 +26,10 @@ All services share a persistent, version-controlled configuration and a common "
 
 ## Core Workflow: The "Living Wiki" Inbox
 
-The central innovation of this setup is the automated integration of information.
+The central innovation of a LLM Wiki is the automated integration of information.
 
 1.  **The Inbox (`/workspace/raw`)**: Users drop documents (MD, TXT, HTML, etc.) into the `raw` directory.
-2.  **The Integrator**: Hermes monitors this directory. It identifies new files, extracts their textual content, and transforms them into Markdown for viewing and editing in SilverBullet.
+2.  **The Integrator**: The agent monitors this directory. It identifies new files, extracts their textual content, and transforms them into Markdown for display in SilverBullet.
 3.  **The Wiki (`/workspace/wiki`)**: The processed content is moved into the SilverBullet wiki using a strict `snake_case.md` naming convention, ensuring a clean, searchable, and interlinked "wiki graph."
 
 ---
