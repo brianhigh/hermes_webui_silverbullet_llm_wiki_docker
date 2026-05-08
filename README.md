@@ -1,8 +1,6 @@
-# hermlet
-
 ![hermlet mascot](images/hermlet_mascot_small.png)
 
-## Purpose
+## Hermlet: Hermes Agent + SilverBullet Wiki
 
 This repository contains the orchestration configuration for a "Living LLM Wiki" deployment.
 
