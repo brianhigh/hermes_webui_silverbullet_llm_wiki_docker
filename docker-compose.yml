@@ -169,7 +169,7 @@ services:
     restart: unless-stopped
     volumes:
       - hermes-home:/hermes_data
-      - ${SB_FOLDER:-~/workspace/space}:/space
+      - ${SB_FOLDER:-~/workspace/wiki}:/space
     environment:
       # *** Change this password! ***
       - SB_USER=admin:password

@@ -30,14 +30,14 @@ The central innovation of this setup is the continuous, automated integration of
 
 1.  **The Inbox (`/workspace/raw`)**: Users drop documents (MD, TXT, HTML, etc.) into the `raw` directory.
 2.  **The Integrator**: A background process (via `cron`) monitors this directory. It identifies new files, extracts their textual content, and transforms them into SilverBullet-compatible Markdown.
-3.  **The Wiki (`/workspace/space`)**: The processed content is moved into the SilverBullet space using a strict `snake_case.md` naming convention, ensuring a clean, searchable, and interlinked "wiki graph."
+3.  **The Wiki (`/workspace/wiki`)**: The processed content is moved into the SilverBullet wiki using a strict `snake_case.md` naming convention, ensuring a clean, searchable, and interlinked "wiki graph."
 
 ---
 
 ## Configuration & Deployment
 
 ### 1. Configuration
-The entire system's behavior (including the connection to your local **Ollama** instance) is controlled via a single, version-controlled file: `config/hermes.env`.
+The system's behavior (including the connection to your local **Ollama** instance) is controlled via the file: `config/hermes.env`.
 
 By mounting this file as a **bind mount** into the `hermes-agent` container, we ensure that:
 - The configuration is persistent across container recreations.
@@ -51,10 +51,11 @@ Edit `config/hermes.env` on your host machine and restart the containers. You ma
 Clone this repository and enter the `hermlet` folder:
 
 ```bash
-mkdir -p ~/workspace/{raw,space}
+mkdir -p ~/workspace/{raw,wiki,templates}
 git clone https://github.com/brianhigh/hermlet.git
 cd hermlet
-cp eat_that_frog_summary.md ~/workspace/space/
+cp eat_that_frog.md ~/workspace/wiki/
+cp HERMES.md ~/workspace/
 ```
 
 Ensure Docker Desktop is running. From the `hermlet` directory, run:
@@ -89,7 +90,7 @@ For details, see "Test the Ingestion Workflow" later in this README, as it invol
 
 This system is designed to implement Brian Tracy's [Eat That Frog!](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/) productivity philosophy. By automating the mundane task of information organization, the agent allows you to focus on your most important, high-impact "A1" tasks.
 
-To guide your Hermes agent to follow this approach, use the example `initial_prompt.md` as a starting point. It refers to `eat_that_frog_summary.md` which you can place in `/workspace/space` before use.
+To guide your Hermes agent to follow this approach, you may use the example `initial_prompt.md` as a starting point. It refers to `HERMES.md` and `wiki/eat_that_frog.md`.
 
 ## Web Applications 
 
@@ -108,7 +109,7 @@ The URLs to access the applications in this system will be shown in Docker Desko
 
 #### Test the wiki
 
-Go to http://127.0.0.1:3000/, login, and make sure it's working okay. You should see an index page with various sections, with "Recently modified pages" the bottom. In that section, you should see a link to `eat_that_frog_summary`. The example `initial_prompt.md` references that wiki page.
+Go to http://127.0.0.1:3000/, login, and make sure it's working okay. You should see an index page with various sections, with "Recently modified pages" the bottom. In that section, you should see a link to `eat_that_frog`. The example `initial_prompt.md` references that wiki page.
 
 #### Configure Model (Ollama) in the Dashboard
 
@@ -144,16 +145,7 @@ If the results looks right, then you can start using it as intended. For example
 
 #### Test the Ingestion Workflow
 
-If you choose to use the `initial_prompt.md`, your Hermes agent may automate an ingestion workflow. Mine did and documented it for me like this:
-
-> #### Automated Wiki Ingestion
-> This setup includes an automated pipeline to grow your wiki.
-> 1. **The Inbox:** Drop any `.md`, `.txt`, or `.html` files into `/workspace/raw`.
-> 2. **The Processor:** A Python script (`/workspace/scripts/wiki_integrator.py`) runs via a scheduled `cronjob` every minute.
-> 3. **The Convention:** The script automatically renames files to `snake_case.md` and integrates them into the SilverBullet `/workspace/space` folder.
-> 4. **The Manifest:** A `processed_manifest.txt` in `/workspace` tracks which files have been integrated to prevent duplicates.
-
-You will likely need to chat with your Hermes agent to get this workflow working properly, as it will need to create a new skill. If the workflow automation does not work correctly at first, chat and test until you are satisfied with the results.
+If you choose to use the `initial_prompt.md`, your Hermes agent may automate an ingestion workflow. You will likely need to chat with your Hermes agent to get this workflow working properly, as it will need to create new skills. If the workflow automation does not work correctly at first, chat and test until you are satisfied with the results.
 
 ### Ollama model idle timeout (optional)
 
