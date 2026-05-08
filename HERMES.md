@@ -30,8 +30,8 @@ tags: [wiki, concept]
 last_modified: {{today}}
 ---
 # Page Title
-**Summary**: One to two sentences.
-**Sources**: List of raw files (e.g., `raw/source_doc.pdf`).
+- **Summary**: One to two sentences.
+- **Sources**: List of raw files (e.g., `raw/source_doc.pdf`).
 ---
 Main content with [[snake_case_links]].
 ## Related pages

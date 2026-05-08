@@ -3,8 +3,8 @@ tags: [management, productivity, concept]
 last_modified: 2026-05-08
 ---
 # Summary: Eat That Frog!
-**Summary**: Overview of Brian Tracy's time management and productivity approach
-**Sources**: [The Truth About Frogs](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/)
+- **Summary**: Overview of Brian Tracy's time management and productivity approach
+- **Sources**: [The Truth About Frogs](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/)
 
 ## Overview
 Brian Tracy's ["Eat That Frog!"](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/) is a productivity philosophy and time 
