@@ -4,7 +4,7 @@
 
 This repository contains the orchestration configuration for a "Living LLM Wiki" deployment.
 
-The intended use is for a "single user" system running [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [hermes](https://get-hermes.ai/), [hermes-agent web-dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
+The intended use is for a "single user" system running [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [hermes-agent](https://get-hermes.ai/), [hermes-dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
 
 The example `initial_prompt.md` and `HERMES.md` may be used to guide the agent to create a specific workflow based on a specific productivity philosophy. You are encouraged to customize these files for your own needs.
 
@@ -113,7 +113,7 @@ Go to http://127.0.0.1:3000/, login, and make sure it's working okay. You should
 
 #### Configure Model (Ollama) in the Dashboard
 
-Go to the hermes-agent web dashboard "config" page at http://127.0.0.1:9119/config and press the `<> YAML` button.
+Go to the the hermes-dashboard "config" page at http://127.0.0.1:9119/config and press the `<> YAML` button.
 
 To use locally-hosted Ollama as your model provider, paste this under "Model Configuration" in place of what's already there:
 
@@ -133,7 +133,7 @@ Press the `SAVE` button.
 
 Go here: http://localhost:8787/
 
-Select the model you configured in the web dashboard from the model \[\#\] pick-list at the bottom of the "Message Hermes..." chat box. It should have a "PRIMARY (AUTO)" label next to it. 
+Select the model you configured in the hermes-dashboard from the model \[\#\] pick-list at the bottom of the "Message Hermes..." chat box. It should have a "PRIMARY (AUTO)" label next to it. 
 
 Then enter this (below) into the `CHAT`, or select it from the prompt choices listed:
 
