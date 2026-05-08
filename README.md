@@ -6,7 +6,7 @@ This repository contains the orchestration configuration for a "Living LLM Wiki"
 
 The intended use is for a "single user" system running [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [hermes](https://get-hermes.ai/), [hermes-agent web-dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
 
-The example `initial_prompt.md` may be used to guide the agent to create a specific workflow based on a specific productivity philosophy. You are encouraged to customize this for your own needs.
+The example `initial_prompt.md` and `HERMES.md` may be used to guide the agent to create a specific workflow based on a specific productivity philosophy. You are encouraged to customize these files for your own needs.
 
 The docker compose YAML file is a modification of [docker-compose.three-container.yml](https://github.com/nesquena/hermes-webui/blob/master/docker-compose.three-container.yml) 
 from [hermes-webui](https://github.com/nesquena/hermes-webui).
@@ -26,10 +26,10 @@ All services share a persistent, version-controlled configuration and a common "
 
 ## Core Workflow: The "Living Wiki" Inbox
 
-The central innovation of this setup is the continuous, automated integration of information.
+The central innovation of this setup is the automated integration of information.
 
 1.  **The Inbox (`/workspace/raw`)**: Users drop documents (MD, TXT, HTML, etc.) into the `raw` directory.
-2.  **The Integrator**: A background process (via `cron`) monitors this directory. It identifies new files, extracts their textual content, and transforms them into SilverBullet-compatible Markdown.
+2.  **The Integrator**: Hermes monitors this directory. It identifies new files, extracts their textual content, and transforms them into Markdown for viewing and editing in SilverBullet.
 3.  **The Wiki (`/workspace/wiki`)**: The processed content is moved into the SilverBullet wiki using a strict `snake_case.md` naming convention, ensuring a clean, searchable, and interlinked "wiki graph."
 
 ---
@@ -90,7 +90,7 @@ For details, see "Test the Ingestion Workflow" later in this README, as it invol
 
 This system is designed to implement Brian Tracy's [Eat That Frog!](https://www.briantracy.com/blog/time-management/the-truth-about-frogs/) productivity philosophy. By automating the mundane task of information organization, the agent allows you to focus on your most important, high-impact "A1" tasks.
 
-To guide your Hermes agent to follow this approach, you may use the example `initial_prompt.md` as a starting point. It refers to `HERMES.md` and `wiki/eat_that_frog.md`.
+To guide your Hermes agent to follow this approach, you may use the example `initial_prompt.md` as a starting point. It refers to `HERMES.md` and `wiki/eat_that_frog.md`, which you may customize as needed.
 
 ## Web Applications 
 
