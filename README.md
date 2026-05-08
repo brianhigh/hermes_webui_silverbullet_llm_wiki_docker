@@ -77,7 +77,7 @@ docker compose up -d
 
 ## Security & Isolation
 
-- **Filesystem Isolation**: The agent is restricted to the `/workspace` directory and the `config/.env` file. It cannot see or touch the rest of your host system.
+- **Filesystem Isolation**: The agent is restricted to the `/workspace` directory and the `.hermes/.env` file. It cannot see or touch the rest of your host system.
 - **Read-Only Ingress**: The `/workspace/raw` directory is mounted as **read-only** to the `hermes-agent` container, preventing accidental or malicious modification of incoming data during the processing stage.
 - **Network Lockdown**: The `docker-compose.yml` is configured to bind all services to `127.0.0.1`, ensuring they are only accessible from your local machine and not exposed to the internet or your local network.
 
