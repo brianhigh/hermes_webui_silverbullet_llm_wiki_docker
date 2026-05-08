@@ -4,7 +4,7 @@
 
 This repository contains the orchestration configuration for a "Living LLM Wiki" deployment.
 
-The intended use is for a "single user" system running [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [hermes](https://get-hermes.ai/), [hermes-agent web dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
+The intended use is for a "single user" system running [Docker Desktop](https://www.docker.com/products/docker-desktop/) to locally host [hermes](https://get-hermes.ai/), [hermes-agent web-dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard), [hermes-webui](https://github.com/nesquena/hermes-webui), and [SilverBullet](https://silverbullet.md/) to implement a Karpathy-style [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) with a local Ollama-hosted LLM.
 
 The example `initial_prompt.md` may be used to guide the agent to create a specific workflow based on a specific productivity philosophy. You are encouraged to customize this for your own needs.
 
