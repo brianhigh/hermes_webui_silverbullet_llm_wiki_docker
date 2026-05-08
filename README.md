@@ -159,11 +159,11 @@ You will likely need to chat with your Hermes agent to get this workflow working
 
 ### Ollama model idle timeout (optional)
 
-When you resume chatting after a few minutes of idle time, you may find it annoying delay before the model response. This occurs when Ollama removes your model from VRAM. The delay from reloading the model can be lengthy, especially with larger models.
+When you resume chatting after a few minutes of idle time, you may find an annoying delay before the model response. This occurs when Ollama removes your model from VRAM. The delay from reloading the model can be lengthy, especially with larger models.
 
 #### Windows
 
-If you are running Ollama on Windows, you can increase the model idle timeout:
+If you are running Ollama on Windows, you can increase the model idle timeout with this PowerShell command:
 
 ```powershell
 [System.Environment]::SetEnvironmentVariable("OLLAMA_KEEP_ALIVE", "10m", "User")
@@ -173,8 +173,12 @@ This is a persistent setting. However, you will need to completely shut down Oll
 
 #### Mac/Linux
 
+Similarly, this Bash command sets the environment variable on Mac/Linux:
+
 ```bash
 export OLLAMA_KEEP_ALIVE=10m
 ```
 
-This is not persistent unless you add it to `~/.bashrc`, `~/.bash_profile`, or ~/.zshrc`.
+This is not persistent unless you add it to `~/.bashrc`, `~/.bash_profile`.
+
+For more information, see: https://markaicode.com/ollama-keep-alive-memory-management/
