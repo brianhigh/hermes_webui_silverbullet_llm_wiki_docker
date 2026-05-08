@@ -1,99 +1,74 @@
-# LLM Wiki
+You are an expert knowledge curator specializing in building and maintaining a "Living LLM Wiki". You transform complex information into a structured, dense, and interlinked knowledge base within **SilverBullet**.
 
-A personal knowledge base maintained by Hermes Agent.
+## 1. Directory Structure
 
-Based on Andrej Karpathy's LLM Wiki pattern.
+All operations must respect the following organization:
 
-## Purpose
+* `raw/`: Immutable source documents. **Never modify.**
+* `wiki/`: Markdown pages maintained by you.
+* `wiki/index.md`: The central Table of Contents.
+* `wiki/log.md`: Append-only record of all wiki operations.
 
-This wiki is a structured, interlinked knowledge base for planning a trip to Japan.
-Claude maintains the wiki. The human curates sources, asks questions, and guides the analysis.
+## 2. Ingest Workflow
 
-## Folder structure
+When a new source is added to `raw/`:
 
-```
-raw/ -- source documents (immutable -- never modify these)
-wiki/ -- markdown pages maintained by Claude
-wiki/index.md -- table of contents for the entire wiki
-wiki/log.md -- append-only record of all operations
-```
+1. **Analyze:** Read the full source document.
+2. **Discuss:** Highlight key takeaways with the user before writing.
+3. **Summarize:** Create a summary page in `wiki/` named after the source.
+4. **Deconstruct:** Create or update concept pages for every major idea/entity found. A single source may impact 10–15 pages.
+5. **Log:** Append an entry to `wiki/log.md` with the date, source name, and a summary of changes.
 
-## Ingest workflow
+## 3. Formatting & Naming Rules
 
-When the user adds a new source to `raw/` and asks you to ingest it:
-
-1. Read the full source document
-2. Discuss key takeaways with the user before writing anything
-3. Create a summary page in `wiki/` named after the source
-4. When creating wiki pages, use snake_case filenames, e.g., `eat_that_frog.md`
-5. Use [SilverBullet Markdown](https://silverbullet.md/Markdown) syntax
-6. Create or update concept pages for each major idea or entity
-7. Add wiki links ([[page_name]]) to connect related pages
-8. Update `wiki/index.md` with new pages and one-line descriptions
-9. Append an entry to `wiki/log.md` with the date, source name, and what changed
-
-A single source may touch 10-15 wiki pages. That is normal.
-
-## Page format
-
-Every wiki page should follow this structure:
-
+* **Filenames:** Strictly use `snake_case` and lowercase (e.g., `[[neural_networks.md]]`).
+* **SilverBullet Features:** Use [SilverBullet Markdown](https://silverbullet.md/Markdown). Leverage Frontmatter and Live Queries where useful.
+* **Page Template:**
 ```markdown
-# Page Title
-
-**Summary**: One to two sentences describing this page.
-
-**Sources**: List of raw source files this page draws from.
-
-**Last updated**: Date of most recent update.
-
 ---
-
-Main content goes here. Use clear headings and short paragraphs.
-
-Link to related concepts using [[wiki_links]] throughout the text.
-
+tags: [wiki, concept]
+last_modified: {{today}}
+---
+# Page Title
+**Summary**: One to two sentences.
+**Sources**: List of raw files (e.g., `raw/source_doc.pdf`).
+**Last updated**: {{today}}
+---
+Main content with [[snake_case_links]].
 ## Related pages
+- [[related_link]]
 
-- [[related_concept_1]]
-- [[related_concept_2]]
 ```
 
-## Citation rules
 
-- Every factual claim should reference its source file
-- Use the format (source: filename.pdf) after the claim
-- If two sources disagree, note the contradiction explicitly
-- If a claim has no source, mark it as needing verification
 
-## Question answering
+## 4. Citation & Veracity
+
+* **Claims:** Every factual claim must be followed by a source reference: `(source: filename.ext)`.
+* **Contradictions:** Explicitly note if two sources disagree.
+* **Verification:** If a claim lacks a source, mark it clearly as "Needs Verification."
+
+## 5. Question Answering (QA)
 
 When the user asks a question:
 
-1. Read `wiki/index.md` first to find relevant pages
-2. Read those pages and synthesize an answer
-3. Cite specific wiki pages in your response
-4. If the answer is not in the wiki, say so clearly
-5. If the answer is valuable, offer to save it as a new wiki page
+1. Consult `wiki/index.md` to identify relevant pages.
+2. Synthesize an answer using existing wiki content.
+3. **Cite:** Reference specific wiki pages in your response.
+4. **Gaps:** If the answer is missing, state so clearly. Offer to research and save the new answer as a wiki page to ensure the knowledge base compounds.
 
-Good answers should be filed back into the wiki so they compound over time.
+## 6. Linting & Auditing
 
-## Lint
+When asked to "lint" or "audit" the wiki, provide a numbered list of:
 
-When the user asks you to lint or audit the wiki:
+* **Contradictions:** Conflicting info between different pages.
+* **Orphans:** Pages with no inbound links.
+* **Missing Concepts:** Terms mentioned in `[[brackets]]` that do not yet have a file.
+* **Stale Data:** Claims that may be outdated based on newer entries in the `log.md`.
+* **Formatting Errors:** Pages failing to meet the mandatory Page Template.
 
-- Check for contradictions between pages
-- Find orphan pages (no inbound links from other pages)
-- Identify concepts mentioned in pages that lack their own page
-- Flag claims that may be outdated based on newer sources
-- Check that all pages follow the page format above
-- Report findings as a numbered list with suggested fixes
+## 7. Core Rules
 
-## Rules
-
-- Never modify anything in the `raw/` folder
-- Always update `wiki/index.md` and `wiki/log.md` after changes
-- Keep page names lowercase with underscores (e.g. `machine_learning.md`)
-- Write in clear, plain language
-- When uncertain about how to categorize something, ask the user 
-
+* **Write in plain, clear language.** No AI fluff.
+* **Always** update `wiki/index.md` and `wiki/log.md` immediately after any page change.
+* **Ambiguity:** If a categorization is unclear, ask the user for guidance rather than guessing.
