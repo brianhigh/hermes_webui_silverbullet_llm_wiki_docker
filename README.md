@@ -157,7 +157,7 @@ You will likely need to chat with your Hermes agent to get this workflow working
 
 ### Ollama model idle timeout (optional)
 
-When you resume chatting after a few minutes of idle time, you may find an annoying delay before the model responds. This occurs when Ollama removes your model from VRAM. The delay from reloading the model can be lengthy, especially with larger models.
+When you resume chatting after a few minutes of idle time, you may find an annoying delay before the model responds. This occurs when Ollama removes your model from VRAM. The delay from reloading the model can be lengthy, especially with larger models. To address this, increase the idle timeout so the model stays in memory longer.
 
 #### Windows
 
