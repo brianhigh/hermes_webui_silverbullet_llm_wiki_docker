@@ -2,7 +2,7 @@
 
 We are embarking on a mission to build a highly organized professional wiki for my role as a 
 \<position\> at \<organization\>. This wiki is our central brain for managing tasks, priorities, 
-and long-term goals.
+and long-term goals, as well as an interlinked encyclopedia of reference material for my work.
 
 ## Our Methodology:
 
