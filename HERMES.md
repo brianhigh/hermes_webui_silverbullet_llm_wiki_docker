@@ -32,7 +32,6 @@ last_modified: {{today}}
 # Page Title
 **Summary**: One to two sentences.
 **Sources**: List of raw files (e.g., `raw/source_doc.pdf`).
-**Last updated**: {{today}}
 ---
 Main content with [[snake_case_links]].
 ## Related pages
