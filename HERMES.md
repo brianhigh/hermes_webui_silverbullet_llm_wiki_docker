@@ -39,8 +39,6 @@ Main content with [[snake_case_links]].
 
 ```
 
-
-
 ## 4. Citation & Veracity
 
 * **Claims:** Every factual claim must be followed by a source reference: `(source: filename.ext)`.
